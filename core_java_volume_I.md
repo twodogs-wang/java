@@ -227,6 +227,8 @@ StringBuilder builder = new StringBuilder();
 builder.append(ch); //append a single character
 builder.append(str); //append a string
 Sting my_string = builder.toString();
+//In java, strings are almost constants. The "price" will be super expensive if we use 
+//a lot string+="xxxx". Therefore StringBuilder is a better choice.
 ```
 
 #### Input and output:
@@ -240,5 +242,98 @@ System.out.print("Hi SpongeBob\n");
 String name = in.nextLine(); //nextInt for single word
 ```
 
+Scanner can not be used for reading password since it is invisible. Console was introduced since Java 6 and it was designed specifically for this purpose.
 
+```java
+Console cons = System.console();
+String username = cons.readLine("User name: ");
+char[] passwd = cons.readPassword("Password: ");
+//the reason we use char rather than string here: string is a constant, which means it //may not be safe under certain conditions. Since it would be stored in heap over a //period of time if we use String to store it. But if we use char[], we can destory it //immediately after we hashed it.
+```
+
+##### Formatting output:
+
+```java
+System.out.printf("%.2f",10000.0/3.0);
+```
+
+#### File input and output:
+
+```java
+Scanner in = new Scanner(Path.of("myfile.txt"),StandardCharsets.UTF_8);//read file
+//write path like this: "c:\\xxxx\\xxx.txt"
+PrintWriter out = new PrintWriter("myfile.txt",standardCharsets.UTF_8);
+```
+
+#### Control flow:
+
+loops & if else staffs
+
+##### Swicth:
+
+```java
+switch(choice)
+{
+    case 1:
+        //
+        break;
+    case 2:
+        //
+        break;
+    default:
+        //
+        break;
+}
+// a case label can be char,byte,short or int
+```
+
+#### Big numbers:
+
+```java
+BigInteger a = BigInteger.valueOf(100);
+BigInteger c = a.add(b);// c = a + b
+//Java has no operator overloading
+```
+
+#### Arrays:
+
+```java
+int[] a = new int[100]; //or var a = new int[100];
+//or:
+int[] a;
+```
+
+##### for each loop:
+
+```java
+//for (var:collection) statement
+for (int elem:arr)
+    System.out.println(elem);
+```
+
+##### Array copy:
+
+```java
+int[] second = Arrays.copyOf(first, 2*first.length);
+//length is the length of new array, this is commonly used for increase the size of array
+```
+
+##### Command line parameters:
+
+```java
+//"java Message -g cruel world"
+args[0] = "-g"
+args[1] = "cruel"
+args[2] = "world"
+//in java, the name of the program is not stored in args[]
+```
+
+##### Array sorting:
+
+```java
+int[] a = new int[1000];
+Arrays.sort(a);
+```
+
+# Chapter 4: Objects and Classes
 
