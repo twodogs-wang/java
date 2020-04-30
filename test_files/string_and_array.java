@@ -1,4 +1,3 @@
-
 class string_and_array
 {
     public static void main(String[] arg)

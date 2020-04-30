@@ -222,3 +222,23 @@ if(str!=null && str.length()!=0)
 
 ##### Building Strings:
 
+```java
+StringBuilder builder = new StringBuilder();
+builder.append(ch); //append a single character
+builder.append(str); //append a string
+Sting my_string = builder.toString();
+```
+
+#### Input and output:
+
+##### Reading Input:
+
+```java
+import java.util.*; //Scanner class is defined in this package
+Scanner in = new Scanner(System.in);
+System.out.print("Hi SpongeBob\n");
+String name = in.nextLine(); //nextInt for single word
+```
+
+
+
