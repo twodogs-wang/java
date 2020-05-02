@@ -123,9 +123,7 @@ Size s = Size.medium;
 
 System.out.println() operats on System.out object but Math.sqrt() operates on no objects. Such a method is called static method.
 
-#### Conversion between numeric types:
-
-![image-20200428162843659](/Users/zihaowang/Library/Application Support/typora-user-images/image-20200428162843659.png)
+![image-20200501182232765](/Users/zihaowang/Library/Application Support/typora-user-images/image-20200501182232765.png)
 
 In this picture: 
 
