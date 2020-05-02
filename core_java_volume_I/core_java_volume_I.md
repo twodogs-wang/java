@@ -123,7 +123,7 @@ Size s = Size.medium;
 
 System.out.println() operats on System.out object but Math.sqrt() operates on no objects. Such a method is called static method.
 
-![image-20200501182232765](/Users/zihaowang/Library/Application Support/typora-user-images/image-20200501182232765.png)
+![figure1](core_java_volume_I/figures/figure1.jpg)
 
 In this picture: 
 
@@ -161,9 +161,9 @@ int super_duper = (int) Math.round(x);
 
 Bitwise can only operates on integer:
 
-![image-20200428165314783](/Users/zihaowang/Desktop/github/java/core_java_volume_I/figures/image-20200428165314783.png)
+![image-20200428165314783](core_java_volume_I/figures/figure2.jpg)
 
-![image-20200428165329089](/Users/zihaowang/Desktop/github/java/core_java_volume_I/figures/image-20200428165329089.png)
+![image-20200428165329089](core_java_volume_I/figures/figure3.jpg)
 
 second picture gives a 1 if the fourth bit from the right in the binary repressentation of n is 1, and 0 otherwise.
 
@@ -184,7 +184,7 @@ String s = greeting.substring(0,3);
 System.out.println("hello"+" world");
 ```
 
-![image-20200428170028785](/Users/zihaowang/Desktop/github/java/core_java_volume_I/figures/image-20200428170028785.png)
+![image-20200428170028785](core_java_volume_I/figures/figure4.jpg)
 
 ```java
 String re = "fuck".repeat(3);
