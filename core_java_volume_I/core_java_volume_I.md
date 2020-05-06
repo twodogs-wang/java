@@ -469,3 +469,4 @@ public static void swap(Employee x, Employee y)  //does not work
 
 Summary:
 
+![Xnip2020-05-05_19-00-43.jpg](https://github.com/twodogs-wang/java/blob/master/core_java_volume_I/figures/Xnip2020-05-05_19-00-43.jpg)
