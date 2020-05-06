@@ -470,3 +470,81 @@ public static void swap(Employee x, Employee y)  //does not work
 Summary:
 
 ![Xnip2020-05-05_19-00-43.jpg](https://github.com/twodogs-wang/java/blob/master/core_java_volume_I/figures/Xnip2020-05-05_19-00-43.jpg)
+
+## 4.6 Object construction:
+
+### 4.6.1 Overloading
+
+### 4.6.2 Default Field Initialization:
+
+Bool -> false
+
+Numbers -> 0
+
+Objects -> null
+
+### 4.6.5 parameter names:
+
+```java
+//good way
+public Employee(String name, double salary)
+{
+  this.name = name;
+  this.salary = salary;
+}
+//In C++, it is common to prefix instance fields with an underscore or a fixed letter. (The letters m and x are common choices.) For example, the salary field might be called _salary, mSalary, or xSalary. Java programmers don’t usually do that.
+```
+
+### 4.6.6 Calling another constructor:
+
+```java
+public Employee(double s)
+{
+  //calls Employee(String, double)
+  this("name",s)
+    nextId++;
+}
+```
+
+### 4.6.7 Initialization Blocks:
+
+Means blocks of code that will be executed whenever an object is constructed.
+
+```java
+class Employee
+{
+  //fields
+  
+  
+  
+  //object initialization blocks
+  {
+    id = nextId;
+    nextId ++;
+  }
+  
+  //constructors
+}
+```
+
+## 4.7 Packages:
+
+### 4.7.3 Static imports:
+
+```java
+import static java.lang.System.*;
+//with above line of code, this line will work:
+out.println("bye");
+```
+
+## 4.8 JAR files:
+
+This is designed to package many java files into one file.
+
+```java
+jar cvf jarFileName file1 file2.......
+```
+
+You can use the e option of the jar command to specify the entry of the entire program.
+
+# Chapter 5: Inheritance
