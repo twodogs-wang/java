@@ -335,3 +335,137 @@ Arrays.sort(a);
 
 # Chapter 4: Objects and Classes
 
+## 4.1 Introduction to OOP:
+
+Java has null reference.
+
+## 4.2 Using predefined class
+
+All Java objects live on the heap. When an object contains another object variable, it contains just a pointer.
+
+## 4.3 Defining your own class
+
+```java
+Employee[] staff = new Employee[3];
+staff[0] = new Employee("xxxx");
+staff[1] = new Employee("xxxx");
+staff[2] = new Employee("xxxx");
+//objects array
+```
+
+```java
+//In java, only one public class is allowed in each file and its name must be same as the file's name.
+```
+
+Keyword "public":
+
+public means that any method in any class can call the method.
+
+Private means that the only methods that can access these fields are the methods of the class itself.
+
+### Constructor:
+
+A constructor can only be called in conjunction with the new operator.
+
+A class can have more than one constructor.
+
+```java
+class Employee //classic example LOL
+{
+  private String name;
+  private double salary;
+  private LocalDate hireDay;
+  
+  public Employee(String n, double e, int year, int month, int day) // constructor
+  {
+    name = n;
+    salary = s;
+    hireDay = LocalDate.of(year, month ,day);
+    double salary = s; //wrong, do not use local variable same name as fields
+    var harry = new Employee(xxxxxxxxx);//new feature in java 10
+  }
+}
+```
+
+### Null reference:
+
+```java
+//in java9 this was introduced:
+name = Objects.requireNonNullElse(n, "unknown");
+//this would gurantee that name will never be null
+```
+
+### Implicit and Explicit parameters:
+
+```java
+public void func(double percent)
+{
+	double raise = this.salary * percent/100;
+	this.salary += raise;
+}
+// "this" refers to the implict parameter
+//percent is the Explicit parameter
+```
+
+### **Hints on Encapsulation:**
+
+```java
+Class Employee
+{
+ private Date hireDay;
+ public String getdate()
+ {
+   return hireDay;//bad
+   return (Date) hireDay.clone();//ok
+ }
+}
+```
+
+###  Private methods:
+
+some helper functions could be private.
+
+### Final Instance fields:
+
+Means these fields can not be modified again.
+
+## 4.4 Static fields and Methods:
+
+### 4.4.1 Static fields:
+
+The fields that shared by all objects. It belongs to the class but does not belong to any objects.
+
+### 4.4.3 Static Methods:
+
+Methods that do not operate on objects. They can access to static fields but not object fields.
+
+Notice: It is legal to call a static method by an object. But we do not recommand this since it is confusing.
+
+### 4.4.4 Factory Methods:
+
+### 4.4.5: The main methods:
+
+Each class can have a main method and this can be used to do unit test.
+
+## 4.5 Method parameters:
+
+There are two kinds of parameters:
+
+Primitive types : numbers, bool...
+
+Object references
+
+Java is always call by value.
+
+```java
+public static void swap(Employee x, Employee y)  //does not work
+{
+  Employee temp = x;
+  x = y;
+  y = temp;
+}
+//this demonstrates that Java is not call by reference. Object references are passed by value.
+```
+
+Summary:
+
