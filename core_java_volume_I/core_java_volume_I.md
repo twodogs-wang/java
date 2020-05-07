@@ -657,3 +657,5 @@ public abstract class Person()
 ### 5.1.10 Proetceted access
 
 As already mentioned, protected features in Java are accessible to all subclasses as well as to all other classes in the same package. This is slightly different from the C++ meaning of protected, and it makes the notion of protected in Java even less safe than in C++.
+
+![Xnip2020-05-07_15-07-27.jpg](https://github.com/twodogs-wang/java/blob/master/core_java_volume_I/figures/Xnip2020-05-07_15-07-27.jpg)
