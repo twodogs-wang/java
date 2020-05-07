@@ -548,3 +548,112 @@ jar cvf jarFileName file1 file2.......
 You can use the e option of the jar command to specify the entry of the entire program.
 
 # Chapter 5: Inheritance
+
+## 5.1 Classes, Superclasses and Subclasses
+
+```java
+public class Manager extends Employee
+{
+  //added methods and fields
+}
+```
+
+All inheritance in java is public inheritance.
+
+### 5.1.2 Overriding Methods:
+
+```java
+//example of get salary
+public double getSalary()
+{
+  double base = super.getSalary();
+  return bonus + base;
+}
+```
+
+Inheritance can never take away any fields or methods.
+
+### 5.1.3 Subclass Constructors:
+
+```java
+public Manager(String name, double Salary, int year, int month, int day)
+{
+  super(name, salary, year, month, day); //parents constructor, must come first
+  bonus = 0;
+}
+```
+
+In java, dynamic binding is default behavior.
+
+### 5.1.4 Inheritance Hierarchies:
+
+### 5.1.5 Polymorphism:
+
+### 5.1.6 Understanding Method Calls:
+
+1. complier looks at method name and declared type.
+
+2. check arguments to find the best match, called overloading resolution
+
+3. if "private", "static", "final" then static binding else dynamic binding.
+
+4. when dynamic binding, the virtual machine calls the right version
+
+   
+
+### 5.1.7 Preventing Inheritance: Final Classes and Methods:
+
+```java
+public final class Executive extends Manager
+{
+  //.....
+  public final String getName()
+  {
+    return "I am SpongeBob";
+  }
+}
+//"final" here prevents this class from being inheritance
+//The method getName() here can not be override.
+```
+
+### 5.1.8 Casting:
+
+```java
+Manager BOSS = (Manager) staff[0];
+//There is only one reason why you would want to make a cast—to use an object in its full capacity after its actual type has been temporarily forgotten
+```
+
+```java
+x instanceof C;
+//does not generate an exception if x is null. It simply returns false. That makes sense: null refers to no object, so it certainly doesn’t refer to an object of type C.
+```
+
+### 5.1.9 Abstract Classes:
+
+Just like pure virtual class in C++.
+
+```java
+public abstract String getDescription();
+{
+  //no code needed
+}
+
+public abstract class Person()
+{
+  //...
+  private String name;
+  public String(String name)
+  {
+    this.name = name;
+  }
+  public abstract String getDescription();
+  public String getName()
+  {
+    return Name;
+  }
+}
+```
+
+### 5.1.10 Proetceted access
+
+As already mentioned, protected features in Java are accessible to all subclasses as well as to all other classes in the same package. This is slightly different from the C++ meaning of protected, and it makes the notion of protected in Java even less safe than in C++.
