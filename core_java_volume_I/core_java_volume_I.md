@@ -659,3 +659,73 @@ public abstract class Person()
 As already mentioned, protected features in Java are accessible to all subclasses as well as to all other classes in the same package. This is slightly different from the C++ meaning of protected, and it makes the notion of protected in Java even less safe than in C++.
 
 ![Xnip2020-05-07_15-07-27.jpg](https://github.com/twodogs-wang/java/blob/master/core_java_volume_I/figures/Xnip2020-05-07_15-07-27.jpg)
+
+## 5.2 Object: The Cosmic Superclass
+
+Every class in Java extends Object.
+
+### 5.2.1 varibales of type object:
+
+```java
+Object obj = new Employee("SpongeBob", 35000);
+```
+
+### 5.2.2 The equals method:
+
+### 5.2.3 Equality Testing and Inheritance:
+
+```java
+if (!(otherobject instanceof Employee ) )
+{
+  return false;
+}
+```
+
+### 5.2.4 The hashcode Method:
+
+### 5.2.5 The toString Method:
+
+## 5.3 Generic Array Lists:
+
+In Java, we can set the size of an array at runtime.
+
+A java class called ArrayList, it automatically adjusts its capacity without any additional code.
+
+```java
+ArrayList<Employee> staff = new ArrayList<Employee>();
+ArrayList<Employee> staff = new ArrayList<>(); //called "diamond" syntax
+//Both are ok
+```
+
+Methods:
+
+```java
+staff.add(new Employee("SpongeBob", 35000));
+staff.ensureCapacity(100); //allocate 100 places.
+```
+
+```java
+new ArrayList<>(100);
+new Employee[100];
+//these two are different, second one allocate 100 slots ready for use.
+//But the first one, has the potential of holding 100 elememys, but the begining holds nothing.
+```
+
+Accessing:
+
+```java
+staff.set(i,harry); //since it has not operator overloading
+Employee e = staff.get(i);
+staff.size();
+//call by reference, in C++, vector call by number
+```
+
+Notice:
+
+The complier translates all typed array into raw ArrayList objects after checking the type rules were not violated. So even we use cast to transfrom the type, the situations are still the same and generates the same warnings. Use below code if we guarantee  actions are safe:
+
+```java
+@SuppressWarnings("unchecked") xxxxxxxxx;
+```
+
+## 5.4 Object Wrappers and AutoBoxing
