@@ -729,3 +729,82 @@ The complier translates all typed array into raw ArrayList objects after checkin
 ```
 
 ## 5.4 Object Wrappers and AutoBoxing
+
+Wrapper classes have obvious name: Integer, Long, Float, Double, Short, Byte, Character, and 
+
+Boolean.
+
+First six inherit from the common superclass "Number". The wrapper classes are immutable, they are also "final".
+
+An example:
+
+```java
+var list = ArrayList<Integer>();
+```
+
+The autoboxing specification requires that boolean, byte, char <= 127, short, and int between -128 and 127 are wrapped into fixed objects
+
+## 5.5 Methods with variable Numbers of Parameters:
+
+```java
+public class PrintStream
+{
+  public PrintStream printf(String fmt, Object... args)
+  {
+    return format(fmt,args);
+  }
+}
+```
+
+Here, the "..." is part of java code. The printf receives two parameters: format string and objects[] holds all other parameters.
+
+An Example of computing largest number:
+
+```java
+public static double max_max(double... values)
+{
+  double largest = Double.NEGATIVE_INFINITY;
+  for(double v:values) if (v>largest) largest = v;
+  return largest;
+}
+```
+
+call it like this:
+
+```java
+double m = max_max(3.1, 40.4, -5);
+```
+
+## 5.6 Enumeration Classes:
+
+```java
+public enum Size(S, M, L, XL, XXL);
+```
+
+The constructor of an enumeration is always private.
+
+All enumerated types are subclasses of the class Enum. They inherit a number of methods 
+
+from that class:
+
+toString(), valueOf();
+
+```java
+Size s = Enum.valueOf(size.class, "SMALL");
+Size[] values = Size.values(); //returns and array of all values of the enumeration
+```
+
+## 5.7 Reflection：
+
+This library is able to manipulate java code dynamically.
+
+A program that can analyze the capabilities of classes is called reflective. We can use it to:
+
+1. Analyze the capabilities of classes at runtime.
+2. Inspect objects at run time.
+3. Implement generic array manipulation code.
+4. Take advantage of Method objects that work just like function mounters in C++
+
+This is a tool and useless for programming applications. So maybe later to continue this chapter.
+
+# Chapter 6: Interfaces, lambda, Inner classes
