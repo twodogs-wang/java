@@ -1085,3 +1085,6 @@ public static <E> boolean contains(Collection<E> c, Object obj)
 }
 ```
 
+Classes in the collections framework:
+
+![figure.PNG](https://github.com/twodogs-wang/java/blob/master/core_java_volume_I/figures/figure.PNG)
