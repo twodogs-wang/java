@@ -807,4 +807,234 @@ A program that can analyze the capabilities of classes is called reflective. We 
 
 This is a tool and useless for programming applications. So maybe later to continue this chapter.
 
-# Chapter 6: Interfaces, lambda, Inner classes
+# Chapter 6: Interfaces, lambda, Inner classes:
+
+## 6.1 Interfaces:
+
+All methods of an interface are automatically public. 
+
+Interfaces never have instance fields but constants are allowed and always static final.
+
+To declare that a class implements an interface, use the implements keyword:
+
+```java
+class Employee implements Comparable<type>
+public int compareTo(Object otherObject)
+{
+  Employee other = (Employee) otherObject;
+  return Double.compare(slalry, other.salary);
+}
+//compareTo method is required to do sort
+```
+
+```java
+package interfaces;
+public class Employee implements Comparable<Employee>
+{
+//.......
+	public int compareTo(Employee other)
+	{
+		return Double.compare(salary, other.salary);
+	}
+}
+```
+
+If there is a common algorithm for comparing subclass objects, simply provide a single compareTo method in the superclass and declared as final.
+
+Why interfaces but not abstract class?
+
+```java
+//Since in java, there is no multiple ineritance. However, multiple interfaces is ok which is more flexible and more effective!!!
+```
+
+Default methods clash:
+
+1. Superclass win
+2. Interface clash. Java throws an exception.
+
+You can never make a default method that redefines one of the methods in the Object class. For example, you can’t define a default method for toString or equals, even though that might be attractive for interfaces such as List. As a consequence of the “class wins” rule, such a method could never win against Object.toString or Objects.equals. 
+
+### 6.1.8 Comparator:
+
+Lets say we want to compare strings in terms of their length. Obviously we can not modify String class.
+
+```java
+class LengthComparator implements Comparator<String>
+{
+  public int compare(String first, String second)
+  {
+    return first.length() - second.length();
+  }
+}
+//to actually do the comparison:
+var comp = new LengthComparator();
+if (comp.compare(words[i],words[j]) > 0) //.......
+ //we need an instance to call this method since it is not static
+-------------------------------
+  //sort an array:
+String[] friends = {"PatricStart","SpongeBob","SquidWard"};
+Arrays.sort(friends,new LengthComparator);
+```
+
+### 6.1.9 Object Cloning:
+
+The clone method is a protected method of Object. It is shallow copy by default.
+
+```java
+int [] arr = {1,2,3,4,5};
+int [] new_arr = arr.clone();
+new_arr[1] = 33333; //arr does not change
+```
+
+## 6.2 Lambda Expressions:
+
+Use the above example of comparing strings:
+
+```java
+Comparator<String> comp = (first,second) -> first.length() - second.length();
+```
+
+We never specify the result type of a lambda expression. It is always referred from context.
+
+### 6.2.3 Functional Interfaces:
+
+An interface with a single abstract method is called functional interfaces. 
+
+e.g.: Arrays.sort()
+
+### 6.2.4 Method references:
+
+:: operator is used instead of .
+
+### 6.2.5 Constructor reference:
+
+Constructor references are just like method references.
+
+### 6.2.6:
+
+change variable in a lambda expression is not safe. Every captured variable in a lambda expression must be final.
+
+## 6.3: Inner class:
+
+Reason for using Inner class:
+
+1. Inner classes can be hidden from other classes in the samepackage
+2. Inner classes methods can access the data from the scope in which they are defined
+
+Static Inner class:
+
+Inner classes that are not able to access the outer scope.
+
+Inner classes declared inside an interface are automatically static and public
+
+# Chapter 7: Exceptions, Assertions and logging
+
+## 7.1: Dealing with errors:
+
+```java
+public FileInputStream(String name) throws FileNotFoundException
+```
+
+### 7.1.4 Creating Exception Class:
+
+```java
+class FileFormatException extends IOException
+{
+  public FileFormatException(){}
+  public FileFormatException(String gripe)
+  {
+    super(gripe);
+  }
+}
+```
+
+## 7.2 Catching exceptions
+
+```java
+try
+{
+//......
+}
+catch (ExceptionType e)
+{
+//...
+}
+```
+
+### 7.2.4 Finally:
+
+1. no exceptions throw:  try block -> finally block
+2. throws an exception and caught right: try block but up to the throwing point -> catch block -> finally, but if an exception happens during catch block, then exception is thrown back to the caller of this method.
+3. The code throws an exception and not caught: try block(part of it) -> finally block
+
+## 7.4 Assertions:
+
+Two forms:
+
+```java
+assert condition;
+assert condtion: expression;//the only purpose of expression is to generate a error message string
+```
+
+Both statements evaluate the condition and throw an AssertionError if it is false. In the second statement, the expression is passed to the constructor of the AssertionError object and turned into a message string. 
+
+## 7.5 Logging
+
+# Chapter 8: Generic Programming
+
+## 8.2 Defining a Simple Generic Class
+
+```java
+public class pair<T>
+{
+  private T first;
+  private T second;
+  public pair(){first = null; second=null;}
+  public pair(T first, T second){this.first = first; this.second = second;}
+  //...and so on
+}
+//separate types is also fine
+public class pair<T, U>
+{
+  //.......
+}
+```
+
+## 8.3 Generic methods:
+
+```java
+class arrayalg
+{
+	public static <T> T get_Middle(T... a) //hint: array ...
+  {
+    return a[a.length/2];
+  }
+}
+```
+
+How to call????
+
+```java
+String middle = arrayalg.get_Middle("SpongeBob","PatricStar","SquidWord");
+```
+
+## 8.4 Bounds for Type Variables:
+
+```java
+public static <T extends Comparable> T min()....
+//this is a restriction of T that T must be comparable.
+```
+
+## 8.5 Generic and virtual machine
+
+JVM does not have generic types and here are the steps how JVM process it:
+
+1. Type Erase: Each time a generic type is defined, a corresponding **raw** type is provided.
+2. Translating Generic Expression: the complier inserts casts when the return type been erased
+3. Translating Generic Methods: 
+4. Calling legacy code: 
+
+## 8.7.8 You can not throw or catch instances of a generic class
+
+## 8.7 Inheritance rules for generic types:
+
