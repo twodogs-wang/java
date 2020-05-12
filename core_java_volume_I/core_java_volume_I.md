@@ -1038,3 +1038,50 @@ JVM does not have generic types and here are the steps how JVM process it:
 
 ## 8.7 Inheritance rules for generic types:
 
+# Chapter 9: Collections:
+
+## 9.1 Interfaces:
+
+### 9.1.3 Iterators:
+
+The iterator has four methods:
+
+```java
+public interface Iterator<E>
+{
+    E next();
+    boolean hasNext();
+    void remove();
+    default void forEachRemaining(Consumer<? super E> action);
+}
+```
+
+The Collection interface extends the iterable interface. Therefore, you can use the "for each" loop for any collection with the standard library.
+
+Instead of using a loop, we can call the forEachRemaining method with a lambda expression that consumes an element.
+
+```java
+iterator.forEachRemaububf(element -> do something);
+```
+
+```java
+it.remove();
+it.remove();//error
+----------------------------
+it.remove();
+it.next();
+it.remove();//OK
+```
+
+### 9.1.4 Generic Utility Methods
+
+```java
+public static <E> boolean contains(Collection<E> c, Object obj)
+{
+    for (E element:c)
+        if(element.equals(obj))
+            return true;
+    return false;
+}
+```
+
