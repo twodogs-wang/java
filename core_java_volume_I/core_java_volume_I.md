@@ -1088,3 +1088,255 @@ public static <E> boolean contains(Collection<E> c, Object obj)
 Classes in the collections framework:
 
 ![figure.PNG](https://github.com/twodogs-wang/java/blob/master/core_java_volume_I/figures/figure.PNG)
+
+Concrete collections in the Java library:
+
+![figuref.PNG](https://github.com/twodogs-wang/java/blob/master/core_java_volume_I/figures/figuref.PNG)
+
+# Chapter 12: Concurrency:
+
+Do not call the run method of the Thread class or the Runnable object. Calling the run method directly merely executes the task in the same thread. Instead, call the Thread.start method. It creates a new thread that executes the run method.
+
+```java
+Runnable task1 = ()->{.....}
+new Thread(task1).start();
+```
+
+
+
+## 12.2 Thread States:
+
+### 12.2.1  New Threads:
+
+The thread is created and not yet running.
+
+### 12.2.2  Runnable Threads:
+
+Can invoke start() method.
+
+### 12.2.3 Blocked and Waiting Threads
+
+### 12.2.4 Terminated Threads
+
+two cases:
+
+1. Finished as normal
+2. An exception been raised
+
+## 12.3 Thread Properties:
+
+### 12.3.1 Interrupting Threads
+
+There is no way to **force** a thread to terminate. However, the interrupt method can be used to request termination of a thread.
+
+```java
+Runnable r = () -> {
+    try
+    {
+        //...
+        while(!Thread.currentThread().isInterrupted())
+        {
+            //do some work
+        }
+    }
+    catch(InterruptedException e)
+    {
+        //thread was interrupted during sleep or wait
+    }
+    finally
+    {
+        //clean up if necessary
+    }
+};
+```
+
+If the thread is blocked, it cannot check the interrupted status. This is where the InterruptedException comes in.
+
+This check is neither necessary nor useful if you call the **sleep** method or another interruptible method after every work iteration. If we call sleep method when the interrupted status is set, it does not sleep. Instead, it clears the status(!) and throws an InteeruptedException. **So if the loop calls sleep, do not check the interrupted status but catch it.**
+
+**interrupted()**, this method is a static method and checks whether the current thread has been interrupted and clear the interrupted status if so.
+
+**Tips:**
+
+1. In the catch clause, call **Thread.currentThread().interrupt()** to set the interrupted status. Then the caller can test it.
+2. Or even better, tag your method with **throws InterruptedException** and drop the **try** block. Then the caller or the run method can catch.
+
+### 12.3.2 Daemon Threads
+
+This kind of threads serve for all other ones like timer thread. JVM exists if only daemon threads remains.
+
+### 12.3.4 Thread Names
+
+```java
+var t = new Thread(runnable);
+t.setName("SpongeBob");
+```
+
+### 12.3.5  Thread Priorities
+
+## 12.4 Synchronization
+
+### 12.4.2 Lock Objects
+
+```java
+private var my_lock = new ReentranLock();
+public void transfer(xxxx)
+{
+    my_lock.lock();
+    try
+    {
+        //.....
+    }
+    finally
+    {
+        //...
+        my_lock.unlock();//important to put unlock here
+    }
+}
+```
+
+### 12.4.4 Condition Objects
+
+A **critical section** is a block of code that accesses a shared resource and can't be executed by more than one thread at the same time.
+
+Condition Objects is used in cases like this:
+
+A thread went into a critical section and the current condition does not allow it to proceed until some condition satisfied.
+
+```java
+class Bank
+{
+    private Condition sufficientFunds;
+    //...
+    public Bank()
+    {
+        //...
+        sufficientFunds = bankLock.newCondition();
+    }
+}
+```
+
+If the **transfer** method finds that sufficient funds are not avaliable, it calls
+
+```java
+sufficientFUnds.await();
+```
+
+ Then the current thread gives up the lock and deactivited. It enters a wait set if **await()** is called until another thread has called the **signalAll** method on the **same condition**.
+
+```java
+sufficientFunds.signalAll();
+```
+
+Normal cases:
+
+```java
+while (!ok to proceed)
+{
+    condition.await();
+}
+```
+
+The **signalAll** method does not active wait set threads but just allow them to compete.
+
+Another method called **signal()**, unblocks only a single thread from the wait set, chosen at random.
+
+### 12.4.5  The synchronized Keyword:
+
+This equivalent to locks condition
+
+```java
+class Bank
+{
+    private double[] accounts;
+    public synchronized void transfer(int from, int to, int amound) throws InterruptedException
+    {
+        while(accounts[from] < amount)
+        wait();//wait on intrinsic object lock's single condition
+    	accounts[from] -= amount;
+        accounts[to] += amount;
+        notifyAll();
+    }
+}
+```
+
+### 12.4.6  Sychronized blocks:
+
+```java
+public class Bank
+{	private double[] accounts;
+    private var lock = new Object();
+ public void transfer(int from, int to, int amount)
+ {
+    synchronized(lock)//an ad-hoc lock
+    {
+        accounts[from] -= amount;
+        accounts[to] += amount;
+    }
+ }
+}
+```
+
+### 12.4.7 The monitor concept
+
+Concepts:
+
+1. A monitor is a class with only private fields
+2. Each object of that class has an associated lock
+3. All methods are locked by that lock.
+4. The lock can have any number of associated conditions.
+
+### 12.4.8  Volatile  fields
+
+This volatile keyword offers a lock-free mechanism for synchronizing access to an instance field. But it does not guarantee atomic.
+
+### 12.4.10 Atomics
+
+## 12.6 Tasks and Thread Pools
+
+### 12.6.2 steps
+
+1. Call the static newCachedThreadPool or new FixedThreadPool method of the Executors class
+2. Call submit to submit a Callable or Runnable objects
+3. Hang on to the returned Future objects so that we can get the results or cancel the tasks.
+4. Call shutdown when you no longer want to submit any tasks.
+
+### 12.6.4 The Fork-Join Framework
+
+Designed for intensive work.
+
+## 12.7 Asynchronous Computations
+
+Normally, we block until the results from the Future object is available.
+
+But the completeableFuture class implements the Future interface and provides a second mechanism for obtaining the result. We register a **callback** that will be invoked(in some thread) with the result once it is available. 
+
+## 12.8 Processes
+
+### 12.8.1 Building a process
+
+Start by specifying the command that we want to execute .
+
+```java
+var builder = new ProcessBuilder("gcc","myapp.c");
+//the first string must be a executable command
+```
+
+Each process has a working directory, which is used to resolve relative directory names.
+
+### 12.8.2 Running a process
+
+```java
+Builder.start();
+```
+
+### 12.8.3 Process Hnadles
+
+Steps:
+
+1. Given a Process object p, **p.toHandle()** yields its **ProcessHandle**.
+2. Given a **long** operating system process ID, **ProcessHandle.of(id)** yields the handle of that process.
+3. **Process.current()** is the handle of the process that returns this JVM
+4. **ProcessHandle.allProcesses()** yields a **Stream<ProcessHandle>** of all operating system processes that are visible to the current process.
+
+Given a process handle, we can get its process id, its parent process, its children and descendants
